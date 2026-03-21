@@ -5,6 +5,14 @@ Telegram bot for self-guided and live street art tours. Uses **uv** for the virt
 ## Prerequisites
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) installed
+- **Python 3.11–3.13** (see `.python-version`; default **3.12**). Avoid **3.14** on the server: `pydantic-core` may not ship wheels yet and building from source needs **gcc** and Rust.
+
+### `linker cc not found` / maturin / pydantic-core build errors
+
+You are on a Python version without a prebuilt wheel (often **3.14**). Fix one of:
+
+1. **Preferred:** use the pinned interpreter — from `new_version/` run `uv python install 3.12` then `uv sync` (uv will use `.python-version`).
+2. **Alternative:** install a compiler so native builds work: `sudo apt install build-essential` (and Rust if still required — heavier).
 
 ## Setup
 

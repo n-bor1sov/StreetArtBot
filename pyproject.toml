@@ -3,7 +3,8 @@ name = "street-art-bot"
 version = "0.1.0"
 description = "Telegram bot for street art walking tours (SpotBot / Место)"
 readme = "README.md"
-requires-python = ">=3.11"
+# Exclude 3.14+ until pydantic-core ships wheels; otherwise uv builds from source (needs gcc, Rust).
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "python-telegram-bot==21.9",
     "motor==3.6.0",
