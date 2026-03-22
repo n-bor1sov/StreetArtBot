@@ -8,24 +8,39 @@ logger = logging.getLogger(__name__)
 
 def load_photo(path: Path) -> InputFile | None:
     """
-    Open a local photo file safely.
+    Build an InputFile for a local image.
     Returns None (with a warning) if the file does not exist.
-    Caller is responsible for closing the file handle after send.
     """
     resolved = path.resolve()
     if not resolved.is_file():
         logger.warning("Photo not found: %s", resolved)
         return None
-    return InputFile(open(resolved, "rb"), filename=resolved.name)
+    return InputFile(resolved)
 
 
-def object_photo_paths(photos_dir: Path, obj_photo_id: str) -> list[Path]:
+def object_photo_paths(
+    photos_dir: Path,
+    obj_photo_id: str,
+    *,
+    object_id: int | None = None,
+) -> list[Path]:
     """Return the 1-3 numbered photo paths for a given art object."""
-    return [
-        photos_dir / f"{obj_photo_id}_Object_{i}.jpg"
-        for i in range(1, 4)
-        if (photos_dir / f"{obj_photo_id}_Object_{i}.jpg").is_file()
-    ]
+
+    def _paths_for(prefix: str) -> list[Path]:
+        return [
+            photos_dir / f"{prefix}_Object_{i}.jpg"
+            for i in range(1, 4)
+            if (photos_dir / f"{prefix}_Object_{i}.jpg").is_file()
+        ]
+
+    pid = obj_photo_id.strip()
+    if pid:
+        found = _paths_for(pid)
+        if found:
+            return found
+    if object_id is not None:
+        return _paths_for(str(object_id))
+    return []
 
 
 def route_map_path(scrins_dir: Path, exc_id: int) -> Path:

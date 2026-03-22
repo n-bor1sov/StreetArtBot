@@ -188,7 +188,9 @@ async def object_page_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     obj_id = exc.objects[num]
     obj = await get_performance(db, obj_id)
 
-    photo_paths = object_photo_paths(settings.photos_dir, obj.photo_id)
+    photo_paths = object_photo_paths(
+        settings.photos_dir, obj.photo_id, object_id=obj.id
+    )
     await update.callback_query.answer()
 
     if photo_paths:

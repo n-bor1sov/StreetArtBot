@@ -204,7 +204,9 @@ async def post_object_callback(update: Update, context: ContextTypes.DEFAULT_TYP
         f"Автор: {obj.painter}\n\n"
         f"{obj.text}"
     )
-    photo_paths = object_photo_paths(settings.photos_dir, obj.photo_id)
+    photo_paths = object_photo_paths(
+        settings.photos_dir, obj.photo_id, object_id=obj.id
+    )
 
     async def send_description(bot: Bot, uid: int) -> None:
         if photo_paths:
