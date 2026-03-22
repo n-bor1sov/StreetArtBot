@@ -15,7 +15,8 @@ def load_photo(path: Path) -> InputFile | None:
     if not resolved.is_file():
         logger.warning("Photo not found: %s", resolved)
         return None
-    return InputFile(resolved)
+    # PTB/httpx expect a file-like or bytes, not a raw Path (Path has no .read()).
+    return InputFile(resolved.read_bytes(), filename=resolved.name)
 
 
 def object_photo_paths(

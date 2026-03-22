@@ -70,6 +70,6 @@ def courage_kb() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("Я готов", callback_data="iamcourage_+")],
-            [InlineKeyboardButton("я пас", callback_data="iamcourage_-")],
+            [InlineKeyboardButton("Я пас", callback_data="iamcourage_-")],
         ]
     )
